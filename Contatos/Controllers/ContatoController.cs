@@ -1,63 +1,20 @@
-using Contatos.Data;
+﻿using Cont.Aplicacao.DTOs.Contato;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
-namespace Contatos.Controllers
+namespace Cont.API.Controllers
 {
+    [Route("api/[controller]/")]
     [ApiController]
-    [Route("[controller]")]
-    public class ContatoController : ControllerBase
+    public class ContatoController(IMediator mediator) : ControllerBase
     {
-        private readonly ContatoContext _context;
-        private readonly ILogger<ContatoController> _logger;
+        private readonly IMediator _mediator;
 
-        public ContatoController(ContatoContext context, ILogger<ContatoController> logger)
+        [HttpPost("RegistrarContato")]
+        public async Task<IActionResult> RegistrarContato([FromBody]RegistrarContatoReq req)
         {
-            _context = context;
-            _logger = logger;
-        }
-
-        [HttpGet(Name = "GetContato")]
-        public async Task<IEnumerable<Contato>> Get()
-        {
-            return await _context.Contatos.ToListAsync();
-        }
-
-        [HttpPost]
-        public async Task<ActionResult<Contato>> Post(Contato contato)
-        {
-            _context.Contatos.Add(contato);
-            await _context.SaveChangesAsync();
-            return CreatedAtAction(nameof(Get), new { id = contato.Id }, contato);
-        }
-
-        [HttpPut("{id}")]
-        public async Task<IActionResult> Put(int id, Contato contato)
-        {
-            if (id != contato.Id)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(contato).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!_context.Contatos.Any(e => e.Id == id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
+            var result = await _mediator.Send(req);
+            return Ok(result);
         }
     }
 }
