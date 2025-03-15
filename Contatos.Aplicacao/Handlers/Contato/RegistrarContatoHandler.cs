@@ -23,6 +23,7 @@ namespace Cont.Aplicacao.Handlers.Contato
                 Nome = request.Nome,
                 Telefone = request.Telefone,
                 Email = request.Email
+
             };
             await _unitOfWork.InserirAsync(contato);
             await _unitOfWork.SalvarAlteracoesAsync(cancellationToken);

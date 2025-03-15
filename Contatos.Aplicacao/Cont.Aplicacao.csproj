@@ -14,4 +14,10 @@
 	  <ProjectReference Include="..\Contatos.Dominio\Cont.Dominio.csproj" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Reference Include="Contatos.Aplicacao">
+	    <HintPath>obj\Debug\net8.0\ref\Cont.Aplicacao.dll</HintPath>
+	  </Reference>
+	</ItemGroup>
+
 </Project>

@@ -14,6 +14,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Contatos.Aplicacao\Cont.Aplicacao.csproj" />
+    <ProjectReference Include="..\Contatos.Dominio\Cont.Dominio.csproj" />
+    <ProjectReference Include="..\Contatos.Infraestrutura\Cont.Infraestrutura.csproj" />
   </ItemGroup>
 
 </Project>
